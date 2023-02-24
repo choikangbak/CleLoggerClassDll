@@ -6,8 +6,8 @@
 
 extern "C" CLE_LOGGING_LIB CleLogger* newWrapLogger()
 {
-	CleLogger* clelogger = new CleLogger();
-	return clelogger;
+	CleLogger* logger = new CleLogger();
+	return logger;
 }
 
 extern "C" CLE_LOGGING_LIB  void setOnOffSinks(CleLogger* logger, bool bCs, bool bF, bool bQt, bool bCb, bool bSql)
@@ -17,7 +17,7 @@ extern "C" CLE_LOGGING_LIB  void setOnOffSinks(CleLogger* logger, bool bCs, bool
 
 extern "C" CLE_LOGGING_LIB  void setLevels(CleLogger * logger, spdlog::level::level_enum lCs, spdlog::level::level_enum lF, spdlog::level::level_enum lQt, spdlog::level::level_enum lCb, spdlog::level::level_enum lSql)
 {
-	logger->setOnOffSink(lCs, lF, lQt, lCb, lSql);
+	logger->setLevels(lCs, lF, lQt, lCb, lSql);
 }
 
 extern "C" CLE_LOGGING_LIB  void createLogger(CleLogger * logger, char* strDir, void* Null, void* func, char* strSqlPw)
@@ -26,9 +26,9 @@ extern "C" CLE_LOGGING_LIB  void createLogger(CleLogger * logger, char* strDir, 
 }
 
 
-extern "C" CLE_LOGGING_LIB  void freeLogger(CleLogger* clelogger)
+extern "C" CLE_LOGGING_LIB  void freeLogger(CleLogger* logger)
 {
-	clelogger->~CleLogger();
+	logger->~CleLogger();
 }
 
 extern "C" CLE_LOGGING_LIB  void logTrace(CleLogger * logger, char* msg)

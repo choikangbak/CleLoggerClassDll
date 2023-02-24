@@ -91,6 +91,7 @@ void CleLogger::initCleLogger(const std::string& strDir, QTextEdit* pQEdit, void
 		sinks.push_back(std::make_shared<spdlog::sinks::wincolor_stdout_sink_mt>());
 		sinks[0]->set_pattern("[%^%l%$] %v");
 		sinks[0]->set_level(m_lvl[0]);
+		std::cout << "Console sink done" << std::endl;
 	}
 	if (m_bSink[1]) {
 		time_t timer = time(NULL);
@@ -102,20 +103,24 @@ void CleLogger::initCleLogger(const std::string& strDir, QTextEdit* pQEdit, void
 
 		sinks.push_back(std::make_shared<spdlog::sinks::rotating_file_sink_mt>(logFile, 1024 * 1024 * 1024, 30));	// 1기가씩 최대 ?개
 		sinks.back()->set_level(m_lvl[1]);
+		std::cout << "File sink done" << std::endl;
 	}
 	if (m_bSink[2] && pQEdit) {
 		sinks.push_back(std::make_shared<spdlog::sinks::qt_sink_mt>(pQEdit, "append"));
 		sinks.back()->set_level(m_lvl[2]);
+		std::cout << "QtEdit sink done" << std::endl;
 	}
 	if (m_bSink[3] && func) {
 		sinks.push_back(std::make_shared < spdlog::sinks::callback_sink_mt>((CALLBACK_FUNC)func));
 		sinks.back()->set_level(m_lvl[3]);
+		std::cout << "Callback sink done" << std::endl;
 	}
 	if (m_bSink[4]) {
 		try {
 			auto sinkPostgre = std::make_shared<spdlog::sinks::postgresql_sink>(strSqlPasswd);
 			sinks.push_back(sinkPostgre);
 			sinks.back()->set_level(m_lvl[4]);
+			std::cout << "sql sink done" << std::endl;
 		}
 		catch (...) {
 			std::cout << "initSpdLog postgresql_sink Error. logs can not to reach DB" << std::endl;
